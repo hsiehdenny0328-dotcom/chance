@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>機率與統計互動教學</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <h1>機率與統計互動教學</h1>
+      <p>從直覺出發，搭配互動模擬與摺疊式推導，完整掌握機率與統計核心概念。</p>
+      <p class="note">包含：機率基礎、條件機率、隨機變數、中央極限定理、統計推論，以及 5 個互動探索區。</p>
+    </div>
+    <nav>
+      <a href="#section-1">機率基礎</a>
+      <a href="#section-2">條件機率與貝氏定理</a>
+      <a href="#section-3">隨機變數與分佈</a>
+      <a href="#section-4">大數法則與 CLT</a>
+      <a href="#section-5">統計推論</a>
+      <a href="#interactive">互動專區</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="section-1" class="chapter">
+      <h2>1. 機率基礎</h2>
+      <div class="card-grid">
+        <article class="concept-card">
+          <h3>什麼是樣本空間與事件？</h3>
+          <p>樣本空間是所有可能結果的集合；事件則是其中的一個子集合。舉例來說，擲骰子時樣本空間為 {1,2,3,4,5,6}，事件可以是「出現偶數」。</p>
+        </article>
+        <article class="concept-card">
+          <h3>古典機率</h3>
+          <p>當所有結果等可能時，機率可由成功結果數除以總結果數。</p>
+        </article>
+      </div>
+      <div class="explanation">
+        <p>機率的核心在於「集合」。如果用 A 表示某事件，|A| 表示事件的結果數量，樣本空間為 S，則古典機率 P(A)=|A|/|S|。</p>
+        <details>
+          <summary>數學推導：為什麼古典機率成立？</summary>
+          <p>在等可能情況下，結果各自發生的機率相等，整個樣本空間總機率為 1，因此每一個結果機率為 1/|S|，事件 A 的機率就是所有屬於 A 的結果機率之和。</p>
+        </details>
+      </div>
+      <article class="detail-card">
+        <h3>樣本空間、事件與集合論</h3>
+        <p>事件 A、B 可以視為集合，A ∪ B 表示「A 或 B」，A ∩ B 表示「A 且 B」，Aᶜ 表示「A 不發生」。</p>
+      </article>
+      <div class="math-block">
+        <h4>加法定理</h4>
+        <p>如果 A 與 B 不相交，P(A ∪ B)=P(A)+P(B)。更一般地：</p>
+        <pre>P(A ∪ B)=P(A)+P(B)−P(A ∩ B)</pre>
+        <details>
+          <summary>解釋為什麼</summary>
+          <p>集合 A ∪ B 包含 A 與 B 的元素，但交集 A ∩ B 會被重複計算一次，需扣除。</p>
+        </details>
+      </div>
+      <div class="math-block">
+        <h4>乘法定理</h4>
+        <p>P(A ∩ B)=P(A)P(B|A)。如果 A 與 B 獨立，則 P(A ∩ B)=P(A)P(B)。</p>
+        <details>
+          <summary>集合論視角</summary>
+          <p>交集就是「同時發生」。先看 A 的可能性，再在 A 發生的前提下求 B 的機率。</p>
+        </details>
+      </div>
+      <div class="memory-cards">
+        <div class="memory-card">機率記憶卡：事件是集合，機率是集合大小比例。</div>
+        <div class="memory-card">加法定理：避免重複計算交集。</div>
+        <div class="memory-card">乘法定理：先算條件，再算交集。</div>
+      </div>
+    </section>
+
+    <section id="section-2" class="chapter">
+      <h2>2. 條件機率與貝氏定理</h2>
+      <article>
+        <h3>條件機率定義</h3>
+        <p>P(B|A) 是「在 A 發生的前提下，B 發生的機率」。</p>
+        <pre>P(B|A)=P(A ∩ B)/P(A)</pre>
+        <details>
+          <summary>直覺理解</summary>
+          <p>只考慮在 A 內的結果，重新標準化為總機率 1。</p>
+        </details>
+      </article>
+      <article>
+        <h3>全機率定理</h3>
+        <p>若事件 B 可以分割成互斥且完備的事件 A<sub>i</sub>，則：</p>
+        <pre>P(B)=∑ P(B|A<sub>i</sub>)P(A<sub>i</sub>)</pre>
+        <details>
+          <summary>真實案例</summary>
+          <p>醫療檢測可用疾病/非疾病兩個事件分割，計算「陽性」的整體機率。</p>
+        </details>
+      </article>
+      <article>
+        <h3>貝氏定理</h3>
+        <pre>P(A|B)=P(B|A)P(A)/P(B)</pre>
+        <p>它告訴我們如何把先驗知識轉為後驗機率。</p>
+        <details>
+          <summary>從醫療診斷切入</summary>
+          <p>疾病盛行率是先驗；檢測敏感度和特異度是似然；陽性後的真實機率就是後驗。</p>
+        </details>
+      </article>
+      <article class="case-study">
+        <h4>真實世界案例：垃圾郵件過濾</h4>
+        <p>先驗：郵件為垃圾郵件的機率。似然：垃圾郵件中含「免費」的比例。後驗：在看到「免費」後，這封郵件是垃圾郵件的機率。</p>
+      </article>
+      <article>
+        <h3>基率謬誤</h3>
+        <p>忽略先驗機率，僅看檢測準確度，常會高估陽性結果的可信度。</p>
+        <details>
+          <summary>典型誤解</summary>
+          <p>如果疾病非常罕見，陽性結果仍可能多數是假的。這就是基率謬誤。</p>
+        </details>
+      </article>
+      <div class="memory-cards">
+        <div class="memory-card">條件機率：先求前提，再求後件。</div>
+        <div class="memory-card">貝氏定理：先驗×似然÷證據。</div>
+        <div class="memory-card">基率謬誤：稀有事件的陽性不等於高真實率。</div>
+      </div>
+    </section>
+
+    <section id="section-3" class="chapter">
+      <h2>3. 隨機變數與機率分佈</h2>
+      <article>
+        <h3>離散 vs. 連續隨機變數</h3>
+        <p>離散變數只有可數值，如骰子。連續變數則取無限多值，如身高或時間。</p>
+        <details>
+          <summary>數學差異</summary>
+          <p>離散變數使用機率質量函數(PMF)，連續變數使用機率密度函數(PDF)。</p>
+        </details>
+      </article>
+      <article>
+        <h3>期望值與變異數的幾何意義</h3>
+        <p>期望值是分佈的重心；變異數衡量數值對期望的偏離程度。</p>
+        <details>
+          <summary>幾何直覺</summary>
+          <p>把每個結果視為重量，期望是平衡點，變異數是離心力的平方平均。</p>
+        </details>
+      </article>
+      <article>
+        <h3>重要分佈</h3>
+        <div class="distribution-list">
+          <div>
+            <h4>二項式分佈</h4>
+            <p>適用於重複試驗的成功次數，例如 N 次投幣出現多少次正面。</p>
+            <details>
+              <summary>公式</summary>
+              <pre>P(X=k)=C(N,k)p^k(1-p)^{N-k}</pre>
+            </details>
+          </div>
+          <div>
+            <h4>卜瓦松分佈</h4>
+            <p>描述單位時間內罕見事件的次數，例如客戶到達、事故發生。</p>
+            <details>
+              <summary>公式</summary>
+              <pre>P(X=k)=e^{-λ}λ^k/k!</pre>
+            </details>
+          </div>
+          <div>
+            <h4>正態分佈</h4>
+            <p>常見於大量獨立效應的總合，形狀呈鈴形。</p>
+            <details>
+              <summary>公式</summary>
+              <pre>f(x)=1/(σ√{2π}) exp(-(x-μ)^2/(2σ^2))</pre>
+            </details>
+          </div>
+        </div>
+      </article>
+      <div class="memory-cards">
+        <div class="memory-card">離散：有限或可數；連續：無限值域。</div>
+        <div class="memory-card">期望是重心，變異數是平方偏差。</div>
+        <div class="memory-card">正態分佈常見於大量獨立事件總和。</div>
+      </div>
+    </section>
+
+    <section id="section-4" class="chapter">
+      <h2>4. 大數法則與中央極限定理</h2>
+      <article>
+        <h3>大數法則</h3>
+        <p>當試驗次數增加，樣本平均值會趨近於真實期望值。</p>
+        <details>
+          <summary>嚴謹直覺解釋</summary>
+          <p>隨機噪聲會因為正負偏差互相抵消，長期平均值會集中在期望周圍。</p>
+        </details>
+      </article>
+      <article>
+        <h3>中央極限定理 (CLT)</h3>
+        <p>不論原始分佈，只要樣本數足夠大，樣本平均值都會近似常態分佈。</p>
+        <details>
+          <summary>直覺原因</summary>
+          <p>每一個樣本平均值都是許多獨立效應的累積，累積結果會變成「鐘形曲線」。</p>
+        </details>
+      </article>
+      <div class="memory-cards">
+        <div class="memory-card">大數法則：平均值穩定，隨機波動減弱。</div>
+        <div class="memory-card">CLT：平均值分佈趨近正態，原始分佈不是重點。</div>
+      </div>
+    </section>
+
+    <section id="section-5" class="chapter">
+      <h2>5. 統計推論</h2>
+      <article>
+        <h3>點估計 vs. 區間估計</h3>
+        <p>點估計給你單一值；區間估計給你一個可信區間，反映估計的不確定性。</p>
+        <details>
+          <summary>生活例子</summary>
+          <p>「這家店平均等待時間是 5 分鐘」是點估計；「95% 信賴區間是 4~6 分鐘」才說明信心。</p>
+        </details>
+      </article>
+      <article>
+        <h3>常見統計謬誤大破解</h3>
+        <ul>
+          <li>p-value 不是假設為真的機率。</li>
+          <li>相關不等於因果。</li>
+          <li>樣本偏差會讓結論失準。</li>
+        </ul>
+        <details>
+          <summary>誤解解析</summary>
+          <p>p-value 反而是「在虛無假設成立下，觀測到至少這樣極端結果的機率」。</p>
+        </details>
+      </article>
+      <div class="memory-cards">
+        <div class="memory-card">點估計：單一最佳猜測。</div>
+        <div class="memory-card">區間估計：反映不確定性。</div>
+        <div class="memory-card">p-value 不是假設成立機率。</div>
+      </div>
+    </section>
+
+    <section id="interactive" class="chapter interactive-section">
+      <h2>互動專區</h2>
+
+      <div class="tool-card" id="simulator-card">
+        <h3>1. 擲骰子 / 拋硬幣模擬器</h3>
+        <div class="tool-controls">
+          <label>模擬類型
+            <select id="sim-type"><option value="coin">拋硬幣</option><option value="dice">擲骰子</option></select>
+          </label>
+          <label>次數 <span id="sim-count-label">1000</span>
+            <input id="sim-count" type="range" min="1" max="10000" value="1000" />
+          </label>
+          <label>速度
+            <input id="sim-speed" type="range" min="1" max="20" value="5" />
+          </label>
+          <button id="sim-start">開始模擬</button>
+          <button id="sim-stop">停止</button>
+        </div>
+        <div class="tool-info">
+          <p>說明：觀察隨著次數增加，結果的頻率分佈如何收斂。</p>
+        </div>
+        <canvas id="sim-chart" width="720" height="240"></canvas>
+      </div>
+
+      <div class="tool-card" id="bayes-card">
+        <h3>2. 貝氏更新視覺化</h3>
+        <div class="tool-controls">
+          <label>疾病盛行率 P(D)
+            <input id="bayes-prior" type="number" min="0" max="1" step="0.01" value="0.01" />
+          </label>
+          <label>檢測敏感度 P(+|D)
+            <input id="bayes-sens" type="number" min="0" max="1" step="0.01" value="0.95" />
+          </label>
+          <label>特異度 P(-|¬D)
+            <input id="bayes-spec" type="number" min="0" max="1" step="0.01" value="0.98" />
+          </label>
+          <label>正確陽性事件次數
+            <input id="bayes-count" type="number" min="1" max="50" step="1" value="5" />
+          </label>
+          <button id="bayes-update">更新後驗</button>
+        </div>
+        <div class="tool-info" id="bayes-result"></div>
+      </div>
+
+      <div class="tool-card" id="clt-card">
+        <h3>3. CLT 動態展示器</h3>
+        <div class="tool-controls">
+          <label>原始分佈
+            <select id="clt-dist"><option value="uniform">均勻</option><option value="exponential">指數</option><option value="skewed">偏態</option></select>
+          </label>
+          <label>樣本大小 n
+            <input id="clt-sample-size" type="range" min="2" max="50" value="10" /> <span id="clt-sample-label">10</span>
+          </label>
+          <label>模擬次數
+            <input id="clt-trials" type="range" min="50" max="2000" value="500" /> <span id="clt-trials-label">500</span>
+          </label>
+          <button id="clt-run">執行</button>
+        </div>
+        <canvas id="clt-chart" width="720" height="240"></canvas>
+      </div>
+
+      <div class="tool-card" id="hypothesis-card">
+        <h3>4. 假設檢定沙盒</h3>
+        <div class="tool-controls">
+          <label>虛無假設 μ₀
+            <input id="hyp-mu0" type="number" step="0.1" value="50" />
+          </label>
+          <label>樣本平均值 x̄
+            <input id="hyp-xbar" type="number" step="0.1" value="53" />
+          </label>
+          <label>樣本標準差 s
+            <input id="hyp-s" type="number" step="0.1" value="8" />
+          </label>
+          <label>樣本大小 n
+            <input id="hyp-n" type="number" min="2" step="1" value="30" />
+          </label>
+          <label>顯著水準 α
+            <input id="hyp-alpha" type="number" min="0.001" max="0.2" step="0.001" value="0.05" />
+          </label>
+          <button id="hyp-test">計算</button>
+        </div>
+        <div class="tool-info" id="hyp-result"></div>
+      </div>
+
+      <div class="tool-card" id="paradox-card">
+        <h3>5. 機率悖論探索區</h3>
+        <div class="subtool">
+          <h4>蒙提霍爾問題</h4>
+          <label>模擬次數
+            <input id="monty-count" type="number" min="10" max="10000" step="10" value="1000" />
+          </label>
+          <button id="monty-run">模擬</button>
+          <p id="monty-result"></p>
+        </div>
+        <div class="subtool">
+          <h4>生日悖論</h4>
+          <label>人數
+            <input id="birthday-n" type="range" min="2" max="60" value="23" /> <span id="birthday-label">23</span>
+          </label>
+          <p id="birthday-result"></p>
+        </div>
+        <div class="subtool">
+          <h4>聖彼得堡悖論</h4>
+          <label>最大擲幣次數
+            <input id="stp-max" type="range" min="5" max="25" value="15" /> <span id="stp-label">15</span>
+          </label>
+          <p id="stp-result"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>如果要深入學習，請使用摺疊區查看數學推導，並搭配互動模擬理解每個概念。</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
